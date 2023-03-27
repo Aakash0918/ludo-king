@@ -6,6 +6,14 @@ use App\Models\ApplicationModel;
 
 class Login extends BaseController
 {
+    public function index()
+    {
+        if (session('isLogin')) {
+            return redirect()->back();
+        }
+        $data = [];
+        return view('frontend/login', $data);
+    }
 
     public function send_otp()
     {
