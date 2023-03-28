@@ -1,5 +1,5 @@
 <footer class="footer-menu">
-    <a class="profile" href="">
+    <a class="profile" href="<?= base_url('home/profile')?>">
         <div class="profile-icon">
             <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="1.5" fill="none"
                 stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">

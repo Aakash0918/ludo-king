@@ -124,12 +124,56 @@ header {
 }
 
 .sidebar {
+    width: 0px;
+    padding: 0px;
+    background: #ffffff;
+    box-shadow: 2px 0 5px 0 #d4d4d4;
     position: absolute;
+    transition: .5s;
+    z-index: 1;
     left: 0;
     top: 0;
-    /* width: 250px; */
-    width: 0;
-    display: none;
+    overflow: hidden;
+    min-height: calc(100vh - 30px);
+    border-top-left-radius: 15px;
+}
+
+.show {
+    width: 250px;
+    overflow: scroll;
+    height: calc(100% - 60px);
+    padding: 0 0 60px 0;
+}
+
+.sidepanel {
+    width: 250px;
+    background: #ffffff;
+    overflow: hidden;
+}
+
+.panel-link {
+    display: flex;
+    padding: 10px 10px 10px 25px;
+    border-bottom: 1px solid #d4d4d4;
+    color: #000000;
+    align-items: center;
+}
+.panel-link:last-child {
+    border-bottom: 0px solid #d4d4d4;
+
+}
+.panel-link .icon{
+    width: 30px;
+    height: 30px;
+    background: #d4d4d4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+.panel-link .arrow{
+    margin-left: auto;
 }
 
 /* footer menu */
@@ -220,7 +264,9 @@ header {
 .profile small {
     font-size: 11px;
 }
-.log-out:hover, .profile:hover{
+
+.log-out:hover,
+.profile:hover {
     color: #292E1E;
 }
 
@@ -473,21 +519,24 @@ header {
     margin-bottom: 15px;
     margin-top: 15px;
 }
-.foot-content p{
+
+.foot-content p {
     font-size: .7em;
     color: #959595;
 }
 
 /* battles page */
-.battles-pool{
+.battles-pool {
     padding: 15px 25px;
 }
-.battles-pool h5{
+
+.battles-pool h5 {
     display: flex;
     align-items: center;
-    
+
 }
-.battles-pool h5 div{
+
+.battles-pool h5 div {
     display: flex;
     width: 30px;
     height: 30px;
@@ -497,15 +546,18 @@ header {
     justify-content: center;
     align-items: center;
 }
-.battles-pool h5 span{
+
+.battles-pool h5 span {
     font-weight: 700;
     font-size: 1rem;
 }
-.battles-pool h5 a{
+
+.battles-pool h5 a {
     color: #888888;
     font-size: 14px;
 }
-.pool-item{
+
+.pool-item {
     display: block;
     border-radius: 10px;
     border: 1px solid #00bb6d;
@@ -515,39 +567,48 @@ header {
     box-shadow: 0 0 5px 2px #d4d4d4;
     margin-bottom: 10px;
 }
-.pool-item:hover{
+
+.pool-item:hover {
     color: #292E1E;
 }
-.pool-item:last-child{
+
+.pool-item:last-child {
     margin-bottom: 30px;
 }
-.pool-box{
+
+.pool-box {
     padding: 10px 15px;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
-.pool-price{
+
+.pool-price {
     display: block;
     align-items: center;
     font-size: 1.2rem;
 }
-.pool-price .icon{
+
+.pool-price .icon {
     width: 32px;
 }
-.pool-playing{
+
+.pool-playing {
     padding: 3px 15px;
     border-top: 1px solid #00bb6d;
 }
-.pool-entry-price{
+
+.pool-entry-price {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
 }
-.pool-entry-price small{
+
+.pool-entry-price small {
     font-size: 1.2rem;
 }
-.pool-entry-price button{
+
+.pool-entry-price button {
     padding: 0px 15px;
     border: 0;
     background: #03bb6d;
@@ -556,11 +617,106 @@ header {
     font-size: 1.2rem;
     font-weight: 600;
 }
-.pool{
+
+.pool {
     font-size: .6em;
     width: fit-content;
     color: #888888;
 }
+.profile-content{
+    padding:15px 25px;
+}
+.profile-view{
+    text-align: center;
+}
+.profile-pic{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    box-shadow: 0 0 10px 2px #d4d4d4;
+    margin-left: auto;
+    margin-right: auto;
+    border: 4px solid #0040f1;
+}
+.profile-pic img{
+    border-radius: 50%;
+}
+.profile-username{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+}
+.profile-name{
+    margin-right: 15px;
+    font-size: 1.2em;
+}
+.my-wallet,.profile-active,.refer-code,.cash-won,.battles-play{
+    display: flex;
+    padding: 10px 15px;
+    border-radius: 10px;
+    border: 1px solid #d4d4d4;
+    gap: 15px;
+    flex-direction: row;
+    color: #292E1E;
+    align-items: center;
+}
+.my-wallet .icon,.profile-active .icon,.refer-code .icon,.cash-won .icon,.battles-play .icon{
+    border-radius: 50%;
+    padding: 2px;
+    background: #00bb6d;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.complete-profile h3{
+    font-size: 1.2em;
+    border-bottom: 1px solid #292E1E;
+    padding-bottom: 5px;
+}
+.profile-active{
+    display: flex;
+    padding: 10px 15px;
+    border-radius: 10px;
+    border: 1px solid #d4d4d4;
+    gap: 15px;
+    flex-direction: row;
+    color: #292E1E;
+}
+.my-wallet .title,.profile-active .title,.refer-code .title,.cash-won .title,.battles-play .title{
+    width: calc(100% - 50px);
+}
+.refer-code .title input{
+    width: 100%;
+}
+.refer-code .title{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.refer-code .title .enter{
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    padding: 10px;
+    border: 0;
+    background: #d4d4d4;
+}
+.battles-play .title{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.battles-play .title .count{
+    padding: 5px;
+    background: #d4d4d4;
+    border-radius: 5px;
+    margin-left: auto;
+}
+
 /* mobile css */
 @media screen and (max-width:648px) {
     .main {
@@ -573,7 +729,7 @@ header {
         width: 100%;
         padding: 0px 0;
     }
-    
+
     .game-container {
         max-width: 100%;
         width: 100%;
@@ -586,7 +742,7 @@ header {
         position: relative;
         overflow-y: scroll;
     }
-    
+
     /* navbar */
     header {
         position: fixed;
@@ -599,7 +755,7 @@ header {
         border-top-left-radius: 0;
         z-index: 999;
     }
-    
+
     .navbar {
         display: flex;
         justify-content: unset;
@@ -607,24 +763,24 @@ header {
         padding-left: 15px;
         padding-right: 15px;
     }
-    
+
     .menu {
         margin-right: 15px;
     }
-    
+
     .menu-toggle {
         background: none;
         border: 0;
     }
-    
+
     .brand-logo {
         width: 45px;
     }
-    
+
     .brand-logo img {
         width: 100%;
     }
-    
+
     .cash {
         margin-left: auto;
         display: flex;
@@ -636,19 +792,19 @@ header {
         border: .3px solid #d4d4d4;
         color: #292E1E;
     }
-    
+
     .cash-icon {
         width: 32px;
         padding: 0 3px;
     }
-    
+
     .cash-amount {
         font-size: 16px;
         line-height: 20px;
         padding: 3px;
-    
+
     }
-    
+
     .cash-add {
         padding: 3px;
         background: #d4d4d4;
@@ -656,16 +812,14 @@ header {
         border-bottom-right-radius: 5px;
         display: flex;
     }
-    
+
     .sidebar {
         position: absolute;
         left: 0;
         top: 0;
-        /* width: 250px; */
-        width: 0;
-        display: none;
+        border-top-left-radius: 0;
     }
-    
+
     /* footer menu */
     .footer-menu {
         display: flex;
@@ -682,7 +836,7 @@ header {
         box-shadow: 2px 0 5px #d4d4d4;
         z-index: 9999;
     }
-    
+
     .battles {
         position: absolute;
         border-radius: 50%;
@@ -692,13 +846,13 @@ header {
         width: 70px;
         height: 70px;
         background: linear-gradient(180deg, rgba(255, 255, 255, 0) 50%, rgba(228, 228, 228, 1) 50%);
-    
+
         display: flex;
         justify-content: center;
         flex-direction: column;
         align-items: center;
     }
-    
+
     .battles-click {
         line-height: 1;
         text-align: center;
@@ -714,34 +868,34 @@ header {
         align-items: center;
         color: #fff;
     }
-    
+
     .battles-click:hover {
         color: #fff;
     }
-    
+
     .battles-icon {
         width: 35px;
         margin-left: auto;
         margin-right: auto;
     }
-    
+
     .battles small {
         font-size: 11px;
     }
-    
+
     .log-out {
         margin-left: auto;
         width: 50px;
         text-align: center;
         line-height: 1;
         color: #292E1E;
-    
+
     }
-    
+
     .log-out small {
         font-size: 11px;
     }
-    
+
     .profile {
         margin-right: auto;
         width: 50px;
@@ -749,14 +903,16 @@ header {
         line-height: 1;
         color: #292E1E;
     }
-    
+
     .profile small {
         font-size: 11px;
     }
-    .log-out:hover, .profile:hover{
+
+    .log-out:hover,
+    .profile:hover {
         color: #292E1E;
     }
-    
+
     /* page css */
     .page_blank {
         overflow-y: scroll;
@@ -764,7 +920,7 @@ header {
         margin-bottom: 30px;
         /* padding: 15px 15px 30px 15px; */
     }
-    
+
     /* login page */
     .login-page .brand-logo {
         width: 120px;
@@ -772,21 +928,21 @@ header {
         margin-right: auto;
         margin-bottom: 15px;
     }
-    
+
     .login-page {
         text-align: center;
         padding: 15px;
         width: 100%;
         margin-top: 15%;
     }
-    
+
     .privacy {
         padding: 10px 25px;
         background-color: #ffffff;
         font-size: 12px;
         text-align: center;
     }
-    
+
     .login-btn {
         margin-left: auto;
         border-radius: 10px;
@@ -796,18 +952,18 @@ header {
         font-weight: 600;
         color: #292E1E;
     }
-    
+
     /* home page */
     .home-content {
         margin-top: 60px;
         /* padding: 25px; */
     }
-    
+
     .youtube {
         padding: 25px 15px;
         background: #f4f4f4;
     }
-    
+
     .youtube-help {
         border: 1px solid #d4d4d4;
         padding: 10px 15px;
@@ -817,7 +973,7 @@ header {
         width: 100%;
         text-align: left;
     }
-    
+
     .youtube-help .icon {
         display: flex;
         align-items: center;
@@ -828,24 +984,24 @@ header {
         position: absolute;
         top: -15px;
     }
-    
+
     .youtube-help small {
         font-size: 12px;
     }
-    
+
     .games {
         padding: 20px 15px;
     }
-    
+
     .games h5 {
         font-size: 1em;
         font-weight: 700;
     }
-    
+
     .game-types {
         font-size: 13px;
     }
-    
+
     .game-types .icon {
         width: 25px;
         height: 25px;
@@ -853,22 +1009,22 @@ header {
         padding: 3px;
         border-radius: 50%;
     }
-    
+
     .game-types .icon.trophy {
         background: #0040f1;
-    
+
     }
-    
+
     .game-types span {
         margin-left: 5px;
         margin-right: 5px;
     }
-    
+
     .game-lists .row .col-6.col-lg-6 {
         padding-top: 25px;
         padding-bottom: 5px;
     }
-    
+
     .game-card {
         position: relative;
         border: 1px solid #d4d4d4;
@@ -876,19 +1032,19 @@ header {
         box-shadow: 0 0 5px 0 #d4d4d4;
         display: block;
     }
-    
+
     .live-status {
         position: absolute;
         right: 10px;
         top: -22px;
         color: #f00f00;
     }
-    
+
     .game-img,
     .game-img img {
         border-radius: 10px 10px 0 0;
     }
-    
+
     .game-name {
         text-align: center;
         padding: 7px 10px;
@@ -897,12 +1053,12 @@ header {
         font-weight: 600;
         font-size: 14px;
     }
-    
+
     .game-card:hover .game-name {
         color: #000;
         text-decoration: underline;
     }
-    
+
     .game-name .type {
         width: 25px;
         display: flex;
@@ -913,75 +1069,75 @@ header {
         border-radius: 50%;
         padding: 4px;
     }
-    
+
     .game-name .type.battle {
         background: #f00f00;
-    
+
     }
-    
+
     .game-name .type.tournament {
         background: #0040f1;
     }
-    
+
     .blink {
         -webkit-animation: blink 1s infinite;
         animation: blink 1s infinite;
     }
-    
+
     @-webkit-keyframes blink {
         0% {
             opacity: 1
         }
-    
+
         75% {
             opacity: 1
         }
-    
+
         76% {
             opacity: 0
         }
-    
+
         to {
             opacity: 0
         }
     }
-    
+
     @keyframes blink {
         0% {
             opacity: 1
         }
-    
+
         75% {
             opacity: 1
         }
-    
+
         76% {
             opacity: 0
         }
-    
+
         to {
             opacity: 0
         }
     }
-    
+
     /* footer content */
     .footer-content {
         background-color: #f4f4f4;
         border-top: 1px solid #d4d4d4;
         padding-bottom: 30px;
     }
-    
+
     .foot-menu {
         padding: 10px 15px;
         border-bottom: 1px solid #d4d4d4;
     }
-    
+
     .foot-menu .brand-logo {
         width: 80px;
         margin-left: auto;
         margin-right: auto;
     }
-    
+
     .foot-item {
         font-size: 14px;
         color: #292E1E;
@@ -989,16 +1145,16 @@ header {
         padding: 5px 0px;
         display: block;
     }
-    
+
     .foot-item:hover {
         color: #292E1E;
         text-decoration: underline;
     }
-    
+
     .foot-content {
         padding: 10px 15px;
     }
-    
+
     .foot-content h5 {
         color: #959595;
         font-size: .85em;
@@ -1006,21 +1162,24 @@ header {
         margin-bottom: 15px;
         margin-top: 15px;
     }
-    .foot-content p{
+
+    .foot-content p {
         font-size: .7em;
         color: #959595;
     }
-    
+
     /* battles page */
-    .battles-pool{
+    .battles-pool {
         padding: 15px 15px;
     }
-    .battles-pool h5{
+
+    .battles-pool h5 {
         display: flex;
         align-items: center;
-        
+
     }
-    .battles-pool h5 div{
+
+    .battles-pool h5 div {
         display: flex;
         width: 30px;
         height: 30px;
@@ -1030,15 +1189,18 @@ header {
         justify-content: center;
         align-items: center;
     }
-    .battles-pool h5 span{
+
+    .battles-pool h5 span {
         font-weight: 700;
         font-size: 1rem;
     }
-    .battles-pool h5 a{
+
+    .battles-pool h5 a {
         color: #888888;
         font-size: 14px;
     }
-    .pool-item{
+
+    .pool-item {
         display: block;
         border-radius: 10px;
         border: 1px solid #00bb6d;
@@ -1048,39 +1210,48 @@ header {
         box-shadow: 0 0 5px 2px #d4d4d4;
         margin-bottom: 10px;
     }
-    .pool-item:hover{
+
+    .pool-item:hover {
         color: #292E1E;
     }
-    .pool-item:last-child{
+
+    .pool-item:last-child {
         margin-bottom: 30px;
     }
-    .pool-box{
+
+    .pool-box {
         padding: 10px 15px;
         display: flex;
         align-items: center;
         justify-content: space-between;
     }
-    .pool-price{
+
+    .pool-price {
         display: block;
         align-items: center;
         font-size: 1.2rem;
     }
-    .pool-price .icon{
+
+    .pool-price .icon {
         width: 32px;
     }
-    .pool-playing{
+
+    .pool-playing {
         padding: 3px 15px;
         border-top: 1px solid #00bb6d;
     }
-    .pool-entry-price{
+
+    .pool-entry-price {
         display: flex;
         flex-direction: column;
         align-items: flex-end;
     }
-    .pool-entry-price small{
+
+    .pool-entry-price small {
         font-size: 1.2rem;
     }
-    .pool-entry-price button{
+
+    .pool-entry-price button {
         padding: 0px 15px;
         border: 0;
         background: #03bb6d;
@@ -1089,9 +1260,10 @@ header {
         font-size: 1.2rem;
         font-weight: 600;
     }
-    .pool{
+
+    .pool {
         font-size: .6em;
         width: fit-content;
         color: #888888;
-    } 
+    }
 }
