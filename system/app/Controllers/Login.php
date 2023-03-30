@@ -6,6 +6,11 @@ use App\Models\ApplicationModel;
 
 class Login extends BaseController
 {
+    public function home()
+    {
+        $data = [];
+        return view('frontend/home', $data);
+    }
     public function index()
     {
         if (session('isLogin')) {

@@ -1,13 +1,19 @@
 <header>
     <div class="navbar">
-        
-        <a href="<?= base_url('home/dashboard')?>" class="brand-logo">
-            <img src="<?= base_url('assets/media')?>/ludo.png" alt="">
+
+        <a href="<?= session('isLogin') ? base_url('home/dashboard') : base_url('login') ?>" class="brand-logo">
+            <img src="<?= base_url('assets/media') ?>/ludo.png" alt="">
         </a>
-        <a class="login-btn" href="<?= base_url()?>home/login">
-            Login
-        </a>
+        <?php if (!session('isLogin')) : ?>
+            <a class="login-btn" href="<?= base_url('login') ?>">
+                Login
+            </a>
+        <?php else : ?>
+            <a class="login-btn" href="<?= base_url() ?>home/logout">
+                Logout
+            </a>
+        <?php endif; ?>
 
     </div>
-    
+
 </header>

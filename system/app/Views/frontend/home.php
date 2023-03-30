@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="<?= base_url('assets/css');?>/bootstrap.css">
-    <link rel="stylesheet" href="<?= base_url('assets/css');?>/style.css">
+    <title><?= $title ?? APP_NAME ?></title>
+    <link rel="stylesheet" href="<?= base_url('assets/css'); ?>/bootstrap.css">
+    <link rel="stylesheet" href="<?= base_url('assets/css'); ?>/style.css">
 </head>
 
 <body>
@@ -20,10 +20,8 @@
                         <button class="youtube-help">
                             <div class="icon">
                                 <div>
-                                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="#f00" stroke-width="2"
-                                        fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
-                                        <path
-                                            d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z">
+                                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="#f00" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                                        <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z">
                                         </path>
                                         <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
                                     </svg>
@@ -39,8 +37,8 @@
                     <div class="games">
                         <h5>Our Games</h5>
                         <div class="game-types">
-                            <img class="icon" src="<?= base_url('assets/media')?>/swords.png" alt=""> is for Battles and
-                            <img class="icon trophy" src="<?= base_url('assets/media')?>/trophy.png" alt=""> is for
+                            <img class="icon" src="<?= base_url('assets/media') ?>/swords.png" alt=""> is for Battles and
+                            <img class="icon trophy" src="<?= base_url('assets/media') ?>/trophy.png" alt=""> is for
                             Tournaments. <b>Know more here.</b>
                         </div>
                         <div class="game-lists">
@@ -50,12 +48,11 @@
                                         <div class="live-status blink"><span class="icon">◉</span><small> LIVE</small>
                                         </div>
                                         <div class="game-img">
-                                            <img src="<?= base_url('assets/media')?>/kb_ludo.jpeg" alt="">
+                                            <img src="<?= base_url('assets/media') ?>/kb_ludo.jpeg" alt="">
                                         </div>
                                         <div class="game-name">
                                             <div class="type battle">
-                                                <img class="icon" src="<?= base_url('assets/media')?>/swords.png"
-                                                    alt="">
+                                                <img class="icon" src="<?= base_url('assets/media') ?>/swords.png" alt="">
                                             </div>
                                             Premium Ludo
                                         </div>
@@ -66,12 +63,11 @@
                                         <div class="live-status blink"><span class="icon">◉</span><small> LIVE</small>
                                         </div>
                                         <div class="game-img">
-                                            <img src="<?= base_url('assets/media')?>/kb_ludo.jpeg" alt="">
+                                            <img src="<?= base_url('assets/media') ?>/kb_ludo.jpeg" alt="">
                                         </div>
                                         <div class="game-name">
                                             <div class="type tournament">
-                                                <img class="icon" src="<?= base_url('assets/media')?>/trophy.png"
-                                                    alt="">
+                                                <img class="icon" src="<?= base_url('assets/media') ?>/trophy.png" alt="">
                                             </div>
                                             Premium Ludo
                                         </div>
@@ -82,12 +78,11 @@
                                         <div class="live-status blink"><span class="icon">◉</span><small> LIVE</small>
                                         </div>
                                         <div class="game-img">
-                                            <img src="<?= base_url('assets/media')?>/kb_ludo.jpeg" alt="">
+                                            <img src="<?= base_url('assets/media') ?>/kb_ludo.jpeg" alt="">
                                         </div>
                                         <div class="game-name">
                                             <div class="type tournament">
-                                                <img class="icon" src="<?= base_url('assets/media')?>/trophy.png"
-                                                    alt="">
+                                                <img class="icon" src="<?= base_url('assets/media') ?>/trophy.png" alt="">
                                             </div>
                                             Premium Ludo
                                         </div>
@@ -98,12 +93,11 @@
                                         <div class="live-status blink"><span class="icon">◉</span><small> LIVE</small>
                                         </div>
                                         <div class="game-img">
-                                            <img src="<?= base_url('assets/media')?>/kb_ludo.jpeg" alt="">
+                                            <img src="<?= base_url('assets/media') ?>/kb_ludo.jpeg" alt="">
                                         </div>
                                         <div class="game-name">
                                             <div class="type tournament">
-                                                <img class="icon" src="<?= base_url('assets/media')?>/trophy.png"
-                                                    alt="">
+                                                <img class="icon" src="<?= base_url('assets/media') ?>/trophy.png" alt="">
                                             </div>
                                             Premium Ludo
                                         </div>
@@ -118,7 +112,7 @@
                 <div class="footer-content">
                     <div class="foot-menu">
                         <div class="brand-logo">
-                            <img src="<?= base_url('assets/media')?>/ludo.png" alt="">
+                            <img src="<?= base_url('assets/media') ?>/ludo.png" alt="">
                         </div>
                         <div class="foot-items">
                             <div class="row">
@@ -183,17 +177,18 @@
                             our popular titles are: Escape Run, Bubble Wipeout, Tower Twist, Cricket Gunda, Ludo With
                             Friends. If you have any suggestions around new games that we should add or if you are a
                             game developer yourself and want to work with us, don't hesitate to drop in a line at
-                            <a href="mailto:info@ludo.com">info@ludo.com</a>!</p>
+                            <a href="mailto:info@ludo.com">info@ludo.com</a>!
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- JavaScript -->
-    <script src="<?= base_url('assets/js');?>/jquery.js"></script>
-    <script src="<?= base_url('assets/js');?>/popper.js"></script>
-    <script src="<?= base_url('assets/js');?>/bootstrap.js"></script>
-    <script src="<?= base_url('assets/js');?>/main.js"></script>
+    <script src="<?= base_url('assets/js'); ?>/jquery.js"></script>
+    <script src="<?= base_url('assets/js'); ?>/popper.js"></script>
+    <script src="<?= base_url('assets/js'); ?>/bootstrap.js"></script>
+    <script src="<?= base_url('assets/js'); ?>/main.js"></script>
 </body>
 
 </html>
