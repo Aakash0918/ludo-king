@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login & Registration</title>
     <link rel="stylesheet" href="<?= base_url('assets/css'); ?>/bootstrap.css">
     <link rel="stylesheet" href="<?= base_url('assets/css'); ?>/style.css">
 </head>
@@ -19,16 +19,32 @@
                         <img src="<?= base_url('assets/media/') ?>/ludo.png" alt="">
                     </div>
                     <h3 class="mb-4">Sign Up Or Login</h3>
-                    <form action="" id="loginForm" method="post">
+                    <form action="" id="loginForm" name="loginForm" method="post">
                         <?= csrf_field(); ?>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">+91</span>
-                            <input type="number" class="form-control" placeholder="Mobile Number" aria-label="mobile" name="mobile" id="mobile" aria-describedby="basic-addon1">
+                            <input type="tel" class="form-control" placeholder="Mobile Number" aria-label="mobile" name="mobile" id="mobile" aria-describedby="basic-addon1">
                         </div>
                         <div class="">
                             <button class="form-control btn btn-success" type="submit">Continue</button>
                         </div>
                     </form>
+                    <form action="" id="otpVerify" name="otpVerify" class="d-none" method="post">
+                        <?= csrf_field(); ?>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon2">+91</span>
+                            <input type="number" class="form-control" placeholder="Mobile Number" aria-label="mobile" name="mobile" id="mobile-otp" aria-describedby="basic-addon2">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="otp">OTP</span>
+                            <input type="number" class="form-control" placeholder="Enter Otp" aria-label="otp" name="otp" id="otp" aria-describedby="otp">
+                        </div>
+                        <div class="">
+                            <button class="form-control btn btn-success mb-2" type="submit">Verify OTP</button>
+                            <button class="form-control btn btn-success" onclick="resendOtpbtn()" disabled type="button" id="resendOtp">Resend OTP</button>
+                        </div>
+                    </form>
+
                 </div>
                 <div class="privacy">
                     By proceeding, you agree to our <a href="Terms of Use">Terms of Use</a>, Privacy Policy and that you are 18 years or older. You
@@ -37,6 +53,7 @@
             </div>
         </div>
     </div>
+    <div id="jiosaavn-widget"></div>
     <!-- JavaScript -->
     <script src="<?= base_url('assets/js'); ?>/jquery.js"></script>
     <script src="<?= base_url('assets/js'); ?>/jquery.validate.min.js"></script>
@@ -47,28 +64,22 @@
         $().ready(function() {
             // validate signup form on keyup and submit
             $("#loginForm").validate({
+                onfocusout: false,
+                errorElement: 'div',
+                errorClass: "text-danger",
                 rules: {
-                    mobile: "required"
+                    mobile: {
+                        required: true,
+                        minlength: 10,
+                        maxlength: 10
+                    }
                 },
                 messages: {
-                    firstname: "Please enter your firstname",
-                    lastname: "Please enter your lastname",
-                    username: {
-                        required: "Please enter a username",
-                        minlength: "Your username must consist of at least 2 characters"
+                    mobile: {
+                        required: "Please enter a valid mobile number",
+                        minlength: "Mobile number should be 10 digits",
+                        maxlength: "Mobile number should be 10 digits",
                     },
-                    password: {
-                        required: "Please provide a password",
-                        minlength: "Your password must be at least 5 characters long"
-                    },
-                    confirm_password: {
-                        required: "Please provide a password",
-                        minlength: "Your password must be at least 5 characters long",
-                        equalTo: "Please enter the same password as above"
-                    },
-                    email: "Please enter a valid email address",
-                    agree: "Please accept our policy",
-                    topic: "Please select at least 2 topics"
                 },
                 submitHandler: function(form) {
                     let formData = new FormData(form);
@@ -80,19 +91,175 @@
                         "mimeType": "multipart/form-data",
                         "contentType": false,
                         "data": formData,
+                        dataType: 'json',
                         success: function(response) {
-
+                            if (response.status == true) {
+                                $("#mobile-otp").val($('#mobile').val());
+                                form.reset();
+                                $("#loginForm").addClass('d-none');
+                                $("#otpVerify").removeClass('d-none');
+                                $('<div id="mobile-otp-error" class="text-success" style="">' + response.message + '</div>').insertAfter('#mobile-otp');
+                                timer(120);
+                            } else {
+                                if (response.formErrors) {
+                                    $.each(obj, function(propName, propVal) {
+                                        $('<div id="' + propName + '-error" class="text-danger" style="">' + propVal + '</div>').insertAfter('#' + propName)
+                                    });
+                                } else {
+                                    alert(response.message)
+                                }
+                            }
                         },
                         error: function(response) {
-
+                            alert(response.message)
+                            location.reload();
                         }
-                    }).done(function(response) {
-                        console.log(response);
                     });
                 }
             });
 
+            $("#otpVerify").validate({
+                onfocusout: false,
+                errorElement: 'div',
+                errorClass: "text-danger",
+                rules: {
+                    mobile: {
+                        required: true,
+                        minlength: 10,
+                        maxlength: 10
+                    },
+                    otp: {
+                        required: true,
+                        minlength: 6,
+                        maxlength: 6
+                    }
+                },
+                messages: {
+                    mobile: {
+                        required: "Please enter a valid mobile number",
+                        minlength: "Mobile number should be 10 digits",
+                        maxlength: "Mobile number should be 10 digits",
+                    },
+                    otp: {
+                        required: "Please enter otp",
+                        minlength: "OTP should be 6 digits",
+                        maxlength: "OTP should be 6 digits",
+                    },
 
+                },
+                submitHandler: function(form) {
+                    let formData = new FormData(form);
+                    $.ajax({
+                        "url": "<?= base_url('login/otp-verify') ?>",
+                        "method": "POST",
+                        "timeout": 0,
+                        "processData": false,
+                        "mimeType": "multipart/form-data",
+                        "contentType": false,
+                        "data": formData,
+                        dataType: 'json',
+                        success: function(response) {
+                            if (response.status == true) {
+                                window.location.href = response.redUrl;
+                            } else {
+                                if (response.formErrors) {
+                                    $.each(obj, function(propName, propVal) {
+                                        $('<div id="' + propName + '-error" class="text-danger" style="">' + propVal + '</div>').insertAfter('#' + propName)
+                                    });
+                                } else {
+                                    alert(response.message)
+                                }
+                            }
+                        },
+                        error: function(response) {
+                            alert(response.message)
+                            location.reload();
+                        }
+                    });
+                }
+            });
+
+        });
+
+        function resendOtpbtn() {
+            let formData = new FormData();
+            formData.append('csrf_test_name', '<?= csrf_hash() ?>');
+            formData.append('mobile', $("#mobile-otp").val())
+            $.ajax({
+                "url": "<?= base_url('login/send-otp') ?>",
+                "method": "POST",
+                "timeout": 0,
+                "processData": false,
+                "mimeType": "multipart/form-data",
+                "contentType": false,
+                "data": formData,
+                async: false,
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status == true) {
+                        $('<div id="mobile-otp-error" class="text-success" style="">' + response.message + '</div>').insertAfter('#mobile-otp');
+                        timer(120);
+                    } else {
+                        if (response.formErrors) {
+                            $.each(obj, function(propName, propVal) {
+                                $('<div id="' + propName + '-error" class="text-danger" style="">' + propVal + '</div>').insertAfter('#' + propName)
+                            });
+                        } else {
+                            alert(response.message)
+                        }
+                    }
+                },
+                error: function(response) {
+                    alert(response.message)
+                    location.reload();
+                }
+            });
+            return;
+        }
+
+        let timerOn = true;
+
+        function timer(remaining) {
+            document.getElementById('resendOtp').disabled = true;
+            var m = Math.floor(remaining / 60);
+            var s = remaining % 60;
+
+            m = m < 10 ? '0' + m : m;
+            s = s < 10 ? '0' + s : s;
+            document.getElementById('resendOtp').innerHTML = m + ':' + s;
+            remaining -= 1;
+
+            if (remaining >= 0 && timerOn) {
+                setTimeout(function() {
+                    timer(remaining);
+                }, 1000);
+                return;
+            }
+
+            if (!timerOn) {
+                // Do validate stuff here
+                return;
+            }
+            document.getElementById('resendOtp').innerHTML = 'Resend OTP';
+            document.getElementById('resendOtp').disabled = false;
+            // Do timeout stuff here
+
+        }
+    </script>
+    <script id="jsw-init" src="https://www.jiosaavn.com/embed/_s/embed.js?ver=1676511020891"></script>
+    <script>
+        JioSaavnEmbedWidget.init({
+            a: "1",
+            q: "1",
+            embed_src: "https://www.jiosaavn.com/embed/playlist/49",
+            partner_id: "news18",
+            dismiss: "1",
+            dl: "0",
+            dr: "0",
+            db: "60",
+            ml: "10",
+            mr: "0",
+            mb: "70"
         });
     </script>
 </body>

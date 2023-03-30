@@ -25,12 +25,19 @@ class Login extends BaseController
                 $rules = [
                     'mobile' => 'required|numeric|exact_length[10]|regex_match[/^[+]?[1-9][0-9]{9,14}$/]'
                 ];
+                if ($this->request->getVar('referal_code') != '') {
+                    $rules['referal_code'] = 'alpha_numeric|exact_length[6]';
+                }
                 $errors = [
                     'mobile' => [
                         'required' => 'Mobile number is required.',
                         'numeric' => 'Mobile number has been support only digits.',
                         'exact_length' => 'Mobile number has been support only 10 digits only.',
                         'regex_match' => 'Mobile number is not valid.'
+                    ],
+                    'referal_code' => [
+                        'alpha_numeric' => 'Referal Code is not valid.',
+                        'exact_length' => 'Referal code has been support only 6 characters.'
                     ]
                 ];
                 if (!$this->validate($rules, $errors)) {
@@ -40,7 +47,7 @@ class Login extends BaseController
                     $userModel = new ApplicationModel('users', 'uid');
                     $check  = $userModel->select(['uid', 'user_status', 'user_detele_status'])->where(['mobile' => $postData['mobile'] ?? ''])->first();
                     $otp = random_string('nozero', 6);
-                    $otp_expire = time() * 6 * 60;
+                    $otp_expire = time() + (6 * 60);
                     $userData = [
                         'mobile' => $postData['mobile'],
                         'otp' => $otp,
@@ -112,7 +119,7 @@ class Login extends BaseController
             } else {
                 $postData = $this->request->getPost();
                 $userModel = new ApplicationModel('users', 'uid');
-                $check  = $userModel->select(['uid', 'user_status', 'user_detele_status', 'otp', 'otp_expire', 'user_name', 'email', 'referal_by'])->where(['mobile' => $postData['mobile'] ?? ''])->first();
+                $check  = $userModel->select(['uid', 'user_status', 'user_detele_status', 'otp', 'otp_expire', 'user_name', 'email', 'referal_by', 'mobile'])->where(['mobile' => $postData['mobile'] ?? ''])->first();
                 if (!$check) {
                     return $this->response->setJSON(['message' => 'Validation error occurs.', 'formErrors' => ['mobile' => 'Mobile number has been not register.'], 'status' => false], true);
                 }
