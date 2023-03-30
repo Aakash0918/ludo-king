@@ -21,6 +21,11 @@ img {
     outline: 0;
     box-shadow: none;
 }
+.error{
+    width: 100%;
+    font-size: 12px;
+    color: #f00f00;
+}
 
 .btn-success {
     background-color: #00bb6d;
