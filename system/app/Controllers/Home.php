@@ -35,4 +35,47 @@ class Home extends BaseController
         session()->remove(['isLogin', 'name', 'mobile', 'email']);
         return redirect()->to('/login');
     }
+
+    public function term_condition()
+    {
+        $data = [];
+        $data['pagename'] = 'frontend/term-condition';
+        return view('frontend/index', $data);
+    }
+    public function privacy_policy()
+    {
+        $data = [];
+        $data['pagename'] = 'frontend/privacy-policy';
+        return view('frontend/index', $data);
+    }
+    public function refund_policy()
+    {
+        $data = [];
+        $data['pagename'] = 'frontend/refund-policy';
+        return view('frontend/index', $data);
+    }
+    public function platform_commission()
+    {
+        $data = [];
+        $data['pagename'] = 'frontend/platform-commission';
+        return view('frontend/index', $data);
+    }
+    public function responsible_gaming()
+    {
+        $data = [];
+        $data['pagename'] = 'frontend/responsible-gaming';
+        return view('frontend/index', $data);
+    }
+    public function tds_policy()
+    {
+        $data = [];
+        $data['pagename'] = 'frontend/tds-policy';
+        return view('frontend/index', $data);
+    }
+    public function contact_us()
+    {
+        $data = [];
+        $data['pagename'] = 'frontend/contact-us';
+        return view('frontend/index', $data);
+    }
 }
