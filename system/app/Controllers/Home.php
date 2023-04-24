@@ -78,4 +78,10 @@ class Home extends BaseController
         $data['pagename'] = 'frontend/contact-us';
         return view('frontend/index', $data);
     }
+
+    public function page_not_found()
+    {
+        $data = [];
+        return view('404', $data);
+    }
 }

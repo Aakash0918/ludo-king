@@ -36,7 +36,7 @@
                             <input type="number" class="form-control" placeholder="Mobile Number" aria-label="mobile" name="mobile" id="mobile-otp" aria-describedby="basic-addon2">
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text" id="otp">OTP</span>
+                            <span class="input-group-text" id="otp-addon2">OTP</span>
                             <input type="number" class="form-control" placeholder="Enter Otp" aria-label="otp" name="otp" id="otp" aria-describedby="otp">
                         </div>
                         <div class="">
@@ -66,7 +66,7 @@
             $("#loginForm").validate({
                 onfocusout: false,
                 errorElement: 'div',
-                errorClass: "text-danger",
+                errorClass: "text-danger error",
                 rules: {
                     mobile: {
                         required: true,
@@ -98,12 +98,12 @@
                                 form.reset();
                                 $("#loginForm").addClass('d-none');
                                 $("#otpVerify").removeClass('d-none');
-                                $('<div id="mobile-otp-error" class="text-success" style="">' + response.message + '</div>').insertAfter('#mobile-otp');
+                                $('<div id="mobile-otp-error" class="error text-success" style="">' + response.message + '</div>').insertAfter('#mobile-otp');
                                 timer(120);
                             } else {
                                 if (response.formErrors) {
-                                    $.each(obj, function(propName, propVal) {
-                                        $('<div id="' + propName + '-error" class="text-danger" style="">' + propVal + '</div>').insertAfter('#' + propName)
+                                    $.each(response.formErrors, function(propName, propVal) {
+                                        $('<div id="' + propName + '-error" class="error text-danger" style="">' + propVal + '</div>').insertAfter('#' + propName)
                                     });
                                 } else {
                                     alert(response.message)
@@ -121,7 +121,7 @@
             $("#otpVerify").validate({
                 onfocusout: false,
                 errorElement: 'div',
-                errorClass: "text-danger",
+                errorClass: "text-danger error",
                 rules: {
                     mobile: {
                         required: true,
@@ -163,8 +163,8 @@
                                 window.location.href = response.redUrl;
                             } else {
                                 if (response.formErrors) {
-                                    $.each(obj, function(propName, propVal) {
-                                        $('<div id="' + propName + '-error" class="text-danger" style="">' + propVal + '</div>').insertAfter('#' + propName)
+                                    $.each(response.formErrors, function(propName, propVal) {
+                                        $('<div id="' + propName + '-error" class="error text-danger" style="">' + propVal + '</div>').insertAfter('#' + propName)
                                     });
                                 } else {
                                     alert(response.message)
@@ -197,12 +197,12 @@
                 dataType: 'json',
                 success: function(response) {
                     if (response.status == true) {
-                        $('<div id="mobile-otp-error" class="text-success" style="">' + response.message + '</div>').insertAfter('#mobile-otp');
+                        $('<div id="mobile-otp-error" class="error text-success" style="">' + response.message + '</div>').insertAfter('#mobile-otp');
                         timer(120);
                     } else {
                         if (response.formErrors) {
-                            $.each(obj, function(propName, propVal) {
-                                $('<div id="' + propName + '-error" class="text-danger" style="">' + propVal + '</div>').insertAfter('#' + propName)
+                            $.each(response.formErrors, function(propName, propVal) {
+                                $('<div id="' + propName + '-error" class="error text-danger" style="">' + propVal + '</div>').insertAfter('#' + propName)
                             });
                         } else {
                             alert(response.message)

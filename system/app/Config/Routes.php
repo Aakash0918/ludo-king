@@ -14,7 +14,9 @@ $routes->setDefaultNamespace('App\Controllers');
 $routes->setDefaultController('Home');
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(true);
-$routes->set404Override();
+$routes->set404Override(function () {
+    return view('404');
+});
 // The Auto Routing (Legacy) is very dangerous. It is easy to create vulnerable apps
 // where controller filters or CSRF protection are bypassed.
 // If you don't want to define all routes, please use the Auto Routing (Improved).
@@ -30,6 +32,15 @@ $routes->setAutoRoute(true);
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/', 'Login::home');
+$routes->match(['get', 'post'], '/super-login', 'Login::home');
+$routes->get('/term-condition', 'Home::term_condition');
+$routes->get('/privacy-policy', 'Home::privacy_policy');
+$routes->get('/refund-policy', 'Home::refund_policy');
+$routes->get('/contact-us', 'Home::contact_us');
+$routes->get('/responsible-gaming', 'Home::responsible_gaming');
+$routes->get('/platform-commission', 'Home::platform_commission');
+$routes->get('/tds-policys', 'Home::tds_policy');
+
 
 /*
  * --------------------------------------------------------------------

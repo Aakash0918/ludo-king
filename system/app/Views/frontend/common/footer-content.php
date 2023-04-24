@@ -6,37 +6,37 @@
         <div class="foot-items">
             <div class="row">
                 <div class="col-6 col-lg-6">
-                    <a href="<?= base_url('home/term-condition')?>" class="foot-item">
+                    <a href="<?= base_url('/term-condition') ?>" class="foot-item">
                         Terms & Condition
                     </a>
                 </div>
                 <div class="col-6 col-lg-6">
-                    <a href="<?= base_url('home/privacy-policy')?>" class="foot-item">
+                    <a href="<?= base_url('/privacy-policy') ?>" class="foot-item">
                         Privacy Policy
                     </a>
                 </div>
                 <div class="col-6 col-lg-6">
-                    <a href="<?= base_url('home/refund-policy')?>" class="foot-item">
+                    <a href="<?= base_url('/refund-policy') ?>" class="foot-item">
                         Refund/Cancellation Policy
                     </a>
                 </div>
                 <div class="col-6 col-lg-6">
-                    <a href="<?= base_url('home/contact-us')?>" class="foot-item">
+                    <a href="<?= base_url('/contact-us') ?>" class="foot-item">
                         Contact Us
                     </a>
                 </div>
                 <div class="col-6 col-lg-6">
-                    <a href="<?= base_url('home/responsible-gaming')?>" class="foot-item">
+                    <a href="<?= base_url('/responsible-gaming') ?>" class="foot-item">
                         Responsible Gaming
                     </a>
                 </div>
                 <div class="col-6 col-lg-6">
-                    <a href="<?= base_url('home/platform-commission')?>" class="foot-item">
+                    <a href="<?= base_url('/platform-commission') ?>" class="foot-item">
                         Platform Commission
                     </a>
                 </div>
                 <div class="col-6 col-lg-6">
-                    <a href="<?= base_url('home/tds-policy')?>" class="foot-item">
+                    <a href="<?= base_url('/tds-policy') ?>" class="foot-item">
                         TDS Policy
                     </a>
                 </div>

@@ -174,4 +174,75 @@ class Login extends BaseController
         session()->set($sessionData);
         return true;
     }
+
+    public function admin()
+    {
+        if (session('isLoggedIn'))
+            return redirect()->to('/home/registrations');
+        if ($this->request->getMethod() == 'post') {
+            $rules = [
+                'mobile' => 'required|numeric|exact_length[10]',
+                'password' => 'required|min_length[8]|max_length[32]|validateUser[mobile, password]',
+            ];
+            $errors = [
+                'mobile' => [
+                    'required' => 'Mobile number is required,',
+                    'numeric' => 'Mobile number support only digits.',
+                    'exact_length' => 'Mobile number support exact length of 10 digits.',
+                ],
+                'password' => [
+                    'required' => 'Password is required.',
+                    'min_length' => 'Password support minimum lenght 8.',
+                    'max_length' => 'Password support maximum lenght 32.',
+                    'validateUser' => 'Mobile or Password don\'t match',
+                ],
+            ];
+            if (!$this->validate($rules, $errors)) {
+                session()->setFlashdata('toastr', ['danger' => 'Validation Error Occurs.']);
+                return redirect()->withInput()->back();
+            } else {
+                $handlermodel = new ApplicationModel('users', 'user_id');
+                $user = $handlermodel->where('user_mobile', $this->request->getVar('mobile'))->first();
+                $role = 'handler';
+                if ($user['user_role'] == 2) {
+                    $role = 'admin';
+                }
+                $this->setUserMethod($user, $role);
+                return redirect()->to('/home/registrations');
+            }
+        }
+        return view('admin/login');
+    }
+
+    private function setUserMethod($user, $userType): bool
+    {
+        $return = false;
+        if ($userType == 'handler' || $userType == 'team-leader') {
+            $data = [
+                'id' => $user['user_id'],
+                'name' => $user['user_name'],
+                'email' => $user['user_email'],
+                'mobile' => $user['user_mobile'],
+                'role' => $user['user_role'],
+                'usertype' => $userType,
+                'isLoggedIn' => true,
+                'report_to' => $user['user_report_to'],
+            ];
+            $return = session()->set($data) ? true : false;
+        }
+        if ($userType == 'admin') {
+            $data = [
+                'id' => $user['user_id'],
+                'name' => $user['user_name'],
+                'email' => $user['user_email'],
+                'mobile' => $user['user_mobile'],
+                'role' => $user['user_role'],
+                'usertype' => $userType,
+                'isLoggedIn' => true,
+                'report_to' => $user['user_report_to'],
+            ];
+            $return = session()->set($data) ? true : false;
+        }
+        return $return;
+    }
 }
