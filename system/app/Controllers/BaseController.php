@@ -36,7 +36,7 @@ abstract class BaseController extends Controller
      *
      * @var array
      */
-    protected $helpers = ['url', 'text'];
+    protected $helpers = ['url', 'text', 'wallet_helper', 'inflector'];
 
     /**
      * Be sure to declare properties for any property fetch you initialized.
@@ -58,12 +58,12 @@ abstract class BaseController extends Controller
         session();
     }
 
-    public function sendSms($mobile, $message)
+    protected function sendSms($mobile, $message)
     {
         return true;
     }
 
-    public function generateReferalCode(): string
+    protected function generateReferalCode(): string
     {
         $model = new ApplicationModel('users', 'uid');
         $referalCode = random_string('alnum', 6);
@@ -73,5 +73,112 @@ abstract class BaseController extends Controller
                 break;
         }
         return $referalCode;
+    }
+
+    protected function curlRequestCashFree($path = '', $formData = [])
+    {
+        // $formData = [
+        //     'customer_details' => [
+        //         'customer_id' => 'user_1',
+        //         'customer_email' => 'test@gmail.com',
+        //         'customer_phone' => '9999999999'
+        //     ],
+        //     'order_meta' => [
+        //         'return_url' => 'http://localhost/payment/response/{order_id}',
+        //         'payment_methods' => 'cc,nb,upi,app,dc,banktransfer'
+        //     ],
+        //     'order_id' => 'order_1001' . uniqid(),
+        //     'order_amount' => 1,
+        //     'order_currency' => 'INR'
+        // ];
+        $curl = curl_init();
+
+        curl_setopt_array($curl, [
+            CURLOPT_URL => 'https://sandbox.cashfree.com/pg/' . $path,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => json_encode($formData),
+            CURLOPT_HTTPHEADER => [
+                'accept: application/json',
+                'content-type: application/json',
+                'x-api-version: 2022-09-01',
+                'x-client-id: ' . CASHFREE_KEY,
+                'x-client-secret: ' . CASHFREE_SECRET_KEY
+            ],
+        ]);
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+            //echo 'cURL Error #:' . $err;
+            return ['status' => false, 'data' => $err];
+        } else {
+            return ['status' => true, 'data' => json_decode($response, true)];
+        }
+    }
+
+    protected function checkStatusCashFree($orderId = "")
+    {
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://sandbox.cashfree.com/pg/orders/' . $orderId,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+            CURLOPT_HTTPHEADER => array(
+                'x-client-id: ' . CASHFREE_KEY,
+                'x-client-secret: ' . CASHFREE_SECRET_KEY,
+                'x-api-version: 2021-05-21'
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+            //echo 'cURL Error #:' . $err;
+            return ['status' => false, 'data' => $err];
+        } else {
+            return ['status' => true, 'data' => json_decode($response, true)];
+        }
+    }
+
+    protected function crTransaction($userId, $amount, $type)
+    {
+        $balance = availableBalanceByUserId($userId);
+        $wtrandData = [
+            'user_id' => $userId,
+            'amount' => $amount,
+            'amount_type' => 'cr',
+            'transaction_type' => $type,
+            'before_balance' => $balance,
+            'after_balance' => $balance + $amount,
+            'is_withdrawable' => 1
+        ];
+        $transactionModel = new ApplicationModel('wallet_transactions', 'wid');
+        $y = $transactionModel->insert($wtrandData);
+        if ($y) {
+            $model = new ApplicationModel('users', 'uid');
+            $x = $model->set('balance', '`balance` + ' . $amount, false)->where('uid', $userId)->update();
+            if ($x) {
+                return ['status' => true, 'message' => "success"];
+            } else {
+                $transactionModel->delete($y);
+            }
+        }
+        return ['status' => false, 'message' => "Something went wrong."];
     }
 }

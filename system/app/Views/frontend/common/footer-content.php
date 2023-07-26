@@ -1,3 +1,4 @@
+<?php $setting = cache('support_setting'); ?>
 <div class="footer-content">
     <div class="foot-menu">
         <div class="brand-logo">
@@ -55,7 +56,7 @@
             easy by removing the friction of app-installs.</p>
 
         <p>Ludo is a skill-based real-money gaming platform accessible only for our users in India.
-            It is accessible on <a href="mailto:info@ludo.com">info@ludo.com</a>. On Ludo, users can compete for real
+            It is accessible on <a href="mailto:<?= $setting['mail'] ?? ''['mail'] ?? '' ?>"><?= $setting['mail'] ?? ''['mail'] ?? '' ?></a>. On Ludo, users can compete for real
             cash in
             Tournaments and Battles. They can encash their winnings via popular options such as Paytm
             Wallet, Amazon Pay, Bank Transfer, Mobile Recharges etc.</p>
@@ -72,7 +73,7 @@
             our popular titles are: Escape Run, Bubble Wipeout, Tower Twist, Cricket Gunda, Ludo With
             Friends. If you have any suggestions around new games that we should add or if you are a
             game developer yourself and want to work with us, don't hesitate to drop in a line at
-            <a href="mailto:info@ludo.com">info@ludo.com</a>!
+            <a href="mailto:<?= $setting['mail'] ?? ''['mail'] ?? '' ?>"><?= $setting['mail'] ?? ''['mail'] ?? '' ?></a>!
         </p>
     </div>
 </div>

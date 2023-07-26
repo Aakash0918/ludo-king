@@ -83,6 +83,7 @@
                 },
                 submitHandler: function(form) {
                     let formData = new FormData(form);
+                    formData.append('referal_code', '<?= $_GET['refferal'] ?? '' ?>')
                     $.ajax({
                         "url": "<?= base_url('login/send-otp') ?>",
                         "method": "POST",
@@ -160,7 +161,11 @@
                         dataType: 'json',
                         success: function(response) {
                             if (response.status == true) {
-                                window.location.href = response.redUrl;
+                                <?php if (isset($_GET['redUrl'])) : ?>
+                                    window.location.href = '<?= $_GET['redUrl'] ?>';
+                                <?php else : ?>
+                                    window.location.href = response.redUrl;
+                                <?php endif; ?>
                             } else {
                                 if (response.formErrors) {
                                     $.each(response.formErrors, function(propName, propVal) {

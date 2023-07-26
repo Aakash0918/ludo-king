@@ -12,12 +12,15 @@ class ApplicationModel extends Model
     // protected $useAutoIncrement = true;
     protected $protectFields = false;
 
-    public function __construct($table, $primaryKey)
+    public function __construct($table, $primaryKey, $db = null)
     {
         parent::__construct();
-        //$this->dbname = $dbname;
+
         $this->table = $table;
         $this->primaryKey = $primaryKey;
+        if (!is_null($db)) {
+            $this->db = $db;
+        }
     }
 
     protected $beforeInsert = ['beforeInsert'];

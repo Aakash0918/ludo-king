@@ -5,31 +5,33 @@
                 <div class="">
                     <div class="register">
                         <div class="">
-                            <h4 class="form-head mb-0">Create category</h4>
+                            <h4 class="form-head mb-0">Create Battle</h4>
                         </div>
                         <form action="" method="post" class="register-form">
+                            <?= csrf_field(); ?>
                             <div class="form-group mb-3">
 
                             </div>
                             <div class="form-group mb-3">
-                                <label for="tc_name">Category Name*</label>
-                                <input type="text" name="tc_name" id="tc_name" value="" required class="form-control" placeholder="Category name" autocomplete="off">
-                                <span class="text-danger"></span>
+                                <label for="pool_price">Pool Price*</label>
+                                <input type="number" name="pool_price" id="pool_price" value="<?= old('pool_price') ?? '' ?>" required class="form-control" placeholder="Enter pool price" autocomplete="off">
+                                <span class="text-danger"><?= session('_ci_validation_errors')['pool_price'] ?? ''; ?></span>
                             </div>
                             <div class="form-group mb-3">
-                                <label for="tc_price">Price*</label>
-                                <input type="tel" name="tc_price" id="tc_price" class="form-control" value="" required placeholder="Enter price" autocomplete="off">
-                                <span class="text-danger"></span>
+                                <label for="winning_price">Winning Price*</label>
+                                <input type="number" name="winning_price" id="winning_price" class="form-control" value="<?= old('winning_price') ?? '' ?>" required placeholder="Enter winning price" autocomplete="off">
+                                <span class="text-danger"><?= session('_ci_validation_errors')['winning_price'] ?? ''; ?></span>
                             </div>
-                            
+                            <input type="hidden" name="capacity" value="2">
+
                             <div class="form-group mb-3">
-                                <label for="tc_status">Status</label>
-                                <select name="tc_status" id="tc_status" required class="form-control">
+                                <label for="status">Status</label>
+                                <select name="status" id="status" required class="form-control">
                                     <option value="">Select Status</option>
-                                    <option value="1">Active</option>
-                                    <option value="0">Dective</option>
+                                    <option value="1" <?= (old('status') ?? '') == '1' ? 'selected' : null ?>>Active</option>
+                                    <option value="0" <?= (old('status') ?? '') == '0' ? 'selected' : null ?>>Dective</option>
                                 </select>
-                                <span class="text-danger"></span>
+                                <span class="text-danger"><?= session('_ci_validation_errors')['status'] ?? ''; ?></span>
                             </div>
 
                             <div class="form-group mb-3">

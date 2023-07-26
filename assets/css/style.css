@@ -26,7 +26,6 @@ img {
     font-size: 16px;
     color: #f00f00;
 }
-
 .btn-success {
     background-color: #00bb6d;
     border-color: #00bb6d;
@@ -1271,4 +1270,67 @@ header {
         width: fit-content;
         color: #888888;
     }
+}
+
+.lost{
+    border: 1px solid #f00;
+}
+.lost .pool-playing{
+    border-top: 1px solid #f00;
+
+}
+.lost .pool-entry-price button{
+    background: #f00;
+}
+
+/* refer */
+.refer {
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+}
+
+.refer img {
+    width: 60%;
+
+}
+
+.refer-rule {
+    border-top: 10px solid #ebebeb;
+}
+
+.refer-rule .d-flex {
+    gap: 20px;
+}
+
+.re-img {
+    width: 25%;
+}
+
+.re-content {
+    font-size: 12px;
+}
+
+.share-link {
+    gap: 10px;
+}
+
+.whatsapp img,
+.telegram img,
+.twitter img {
+    width: 40px;
+    height: 40px;
+}
+
+.share-item div {
+    border-radius: 50%;
+    background: #a5a5a5;
+}
+
+.share-item div span img {
+
+    border-radius: 50%;
+    background: #a5a5a5;
+    box-shadow: 0 0 5px 0px #a5a5a5;
 }

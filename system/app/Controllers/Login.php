@@ -51,7 +51,7 @@ class Login extends BaseController
                     $postData = $this->request->getPost();
                     $userModel = new ApplicationModel('users', 'uid');
                     $check  = $userModel->select(['uid', 'user_status', 'user_detele_status'])->where(['mobile' => $postData['mobile'] ?? ''])->first();
-                    $otp = random_string('nozero', 6);
+                    $otp = 123456; //random_string('nozero', 6);
                     $otp_expire = time() + (6 * 60);
                     $userData = [
                         'mobile' => $postData['mobile'],
@@ -68,7 +68,7 @@ class Login extends BaseController
                     } else {
                         $userData['referal_code'] = $this->generateReferalCode();
                         if (($postData['referal_code'] ?? '') != '') {
-                            $referalDetail = $userModel->select('uid')->where('referal_code', $postData['referal'])->first() ?? [];
+                            $referalDetail = $userModel->select('uid')->where('referal_code', $postData['referal_code'])->first() ?? [];
                             if (!$referalDetail) {
                                 return $this->response->setJSON(['message' => 'Validation error occurs.', 'formErrors' => ['referal_code' => 'Referal code is not valid.'], 'status' => false], true);
                             }
@@ -80,7 +80,7 @@ class Login extends BaseController
                     if ($x) {
                         // send Otp Here
                         $mobile = $postData['mobile'];
-                        $message = "[" . APP_NAME . "] your otp is " . $otp . ". It valid for 5 minutes only.";
+                        $message = "[" . cache('support_setting')['name'] . "] your otp is " . $otp . ". It valid for 5 minutes only.";
                         $y = $this->sendSms($mobile, $message);
                         if ($y) {
                             return $this->response->setJSON(['message' => 'OTP has been send on the xxx-xxx-' . substr($postData['mobile'], 6, 4), 'status' => true, 'newBee' => $newBee], true);
@@ -124,7 +124,7 @@ class Login extends BaseController
             } else {
                 $postData = $this->request->getPost();
                 $userModel = new ApplicationModel('users', 'uid');
-                $check  = $userModel->select(['uid', 'user_status', 'user_detele_status', 'otp', 'otp_expire', 'user_name', 'email', 'referal_by', 'mobile'])->where(['mobile' => $postData['mobile'] ?? ''])->first();
+                $check  = $userModel->select(['uid', 'user_status', 'user_detele_status', 'otp', 'otp_expire', 'user_name', 'email', 'referal_by', 'mobile', 'kyc_id', 'referal_code', 'user_image'])->where(['mobile' => $postData['mobile'] ?? ''])->first();
                 if (!$check) {
                     return $this->response->setJSON(['message' => 'Validation error occurs.', 'formErrors' => ['mobile' => 'Mobile number has been not register.'], 'status' => false], true);
                 }
@@ -154,7 +154,7 @@ class Login extends BaseController
                 if ($x) {
                     //set session here
                     $this->setSessionData($check);
-                    return $this->response->setJSON(['message' => 'Login Successfully', 'redUrl' => base_url(), 'status' => true], true);
+                    return $this->response->setJSON(['message' => 'Login Successfully', 'redUrl' => base_url('home/dashboard'), 'status' => true], true);
                 } else {
                     return $this->response->setStatusCode(500)->setJSON(['message' => 'Internal Server Errors.', 'status' => false], true);
                 }
@@ -167,9 +167,13 @@ class Login extends BaseController
     {
         $sessionData = [
             'isLogin' => true,
+            'id' => $data['uid'],
             'name' => $data['user_name'],
             'mobile' => $data['mobile'],
-            'email' => $data['email']
+            'email' => $data['email'],
+            'kyc' => $data['kyc_id'],
+            'referal_code' => $data['referal_code'],
+            'image' => $data['user_image'] ? base_url($data['user_image']) : base_url('assets/media/blank-profile.webp'),
         ];
         session()->set($sessionData);
         return true;
@@ -201,14 +205,14 @@ class Login extends BaseController
                 session()->setFlashdata('toastr', ['danger' => 'Validation Error Occurs.']);
                 return redirect()->withInput()->back();
             } else {
-                $handlermodel = new ApplicationModel('users', 'user_id');
+                $handlermodel = new ApplicationModel('admin_info', 'user_id');
                 $user = $handlermodel->where('user_mobile', $this->request->getVar('mobile'))->first();
                 $role = 'handler';
                 if ($user['user_role'] == 2) {
                     $role = 'admin';
                 }
                 $this->setUserMethod($user, $role);
-                return redirect()->to('/home/registrations');
+                return redirect()->to('/admin');
             }
         }
         return view('admin/login');
@@ -217,32 +221,18 @@ class Login extends BaseController
     private function setUserMethod($user, $userType): bool
     {
         $return = false;
-        if ($userType == 'handler' || $userType == 'team-leader') {
-            $data = [
-                'id' => $user['user_id'],
-                'name' => $user['user_name'],
-                'email' => $user['user_email'],
-                'mobile' => $user['user_mobile'],
-                'role' => $user['user_role'],
-                'usertype' => $userType,
-                'isLoggedIn' => true,
-                'report_to' => $user['user_report_to'],
-            ];
-            $return = session()->set($data) ? true : false;
-        }
-        if ($userType == 'admin') {
-            $data = [
-                'id' => $user['user_id'],
-                'name' => $user['user_name'],
-                'email' => $user['user_email'],
-                'mobile' => $user['user_mobile'],
-                'role' => $user['user_role'],
-                'usertype' => $userType,
-                'isLoggedIn' => true,
-                'report_to' => $user['user_report_to'],
-            ];
-            $return = session()->set($data) ? true : false;
-        }
+        $data = [
+            'aid' => $user['user_id'],
+            'name' => $user['user_name'],
+            'aemail' => $user['user_email'],
+            'amobile' => $user['user_mobile'],
+            'role' => $user['user_role'],
+            'usertype' => $userType,
+            'isLoggedIn' => true,
+            'report_to' => $user['user_report_to'],
+        ];
+        $return = session()->set($data) ? true : false;
+
         return $return;
     }
 }

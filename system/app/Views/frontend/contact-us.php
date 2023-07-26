@@ -12,19 +12,16 @@
             <h4>CONTACT:</h4>
             <ul>
                 <li>
-                    <p><a href="/"><span class="oi oi-globe"></span><abbr>www.ludoking.com</abbr></a></p>
+                    <p><a href="<?= base_url() ?>"><span class="oi oi-globe"></span><abbr><?= $setting['site'] ?? '' ?></abbr></a></p>
                 </li>
                 <li>
-                    <p><a href="mailto:info@ludoking.com"><span
-                                class="oi oi-envelope-closed"></span><abbr>info@ludoking.com</abbr></a></p>
+                    <p><a href="mailto:<?= $setting['mail'] ?? '' ?>"><span class="oi oi-envelope-closed"></span><abbr><?= $setting['mail'] ?? '' ?></abbr></a></p>
                 </li>
             </ul><br>
             <h4>Operational Address:</h4>
-            <p class="decoration-none">ludo king,<br>ludo king Park,<br>Satna,
-                H.P - 385001</p><br>
+            <p class="decoration-none"><?= $setting['address'] ?></p><br>
             <h4>To submit your game write to us:</h4>
-            <p class="decoration-none"><a href="mailto:business@ludoking.com"><span
-                        class="oi oi-envelope-closed"></span><abbr>business@ludoking.com</abbr></a></p><br><br><br><br>
+            <p class="decoration-none"><a href="mailto:business@ludoking.com"><span class="oi oi-envelope-closed"></span><abbr>business@ludoking.com</abbr></a></p><br><br><br><br>
         </div>
-    </div>
+</div>
 </div>

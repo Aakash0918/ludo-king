@@ -13,6 +13,7 @@
  | NOTE: changing this will require manually modifying the
  | existing namespaces of App\* namespaced-classes.
  */
+
 defined('APP_NAMESPACE') || define('APP_NAMESPACE', 'App');
 
 /*
@@ -93,4 +94,5 @@ define('EVENT_PRIORITY_NORMAL', 100);
  * @deprecated Use \CodeIgniter\Events\Events::PRIORITY_HIGH instead.
  */
 define('EVENT_PRIORITY_HIGH', 10);
-define('APP_NAME', 'Ludo King');
+define('CASHFREE_KEY', 'TEST3943551159a3cbcf557444c053553493');
+define('CASHFREE_SECRET_KEY', 'TEST794842532afb95db16e4220b83338624d4afebe4');

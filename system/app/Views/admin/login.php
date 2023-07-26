@@ -18,10 +18,11 @@
     <main class="login-main">
         <div class="login-container">
             <div class="login-section">
-                <a href="<?= base_url('admin/battles') ?>" class=" text-center mb-3">
+                <a href="<?= base_url() ?>" class=" text-center mb-3">
                     <div class="web-logo">Ludo King</div>
                 </a>
                 <form action="" method="post" class="login-form">
+                    <?= csrf_field(); ?>
                     <div class="form-group mb-3">
                         <input type="tel" maxlength="10" minlength="10" value="<?= old('mobile') ?? '' ?>" class="form-control" name="mobile" placeholder="Enter your mobile" required>
                         <span class="text-danger"><?= session('_ci_validation_errors')['mobile'] ?? ''; ?></span>

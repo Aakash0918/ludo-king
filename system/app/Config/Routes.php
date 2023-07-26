@@ -2,8 +2,21 @@
 
 namespace Config;
 
+use App\Models\ApplicationModel;
+
 // Create a new instance of our RouteCollection class.
 $routes = Services::routes();
+
+
+
+if (!cache('support_setting')) {
+    $model = new ApplicationModel('settings', 'sid');
+    $detail = $model->select('setting_value')->where('setting_key', 'support_setting')->first();
+    $detail = json_decode($detail['setting_value'] ?? "{}", true);
+    cache()->save('support_setting', $detail, 600);
+}
+
+
 
 /*
  * --------------------------------------------------------------------
@@ -32,14 +45,15 @@ $routes->setAutoRoute(true);
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/', 'Login::home');
-$routes->match(['get', 'post'], '/super-login', 'Login::home');
+$routes->match(['get', 'post'], '/super-login', 'Login::admin');
 $routes->get('/term-condition', 'Home::term_condition');
 $routes->get('/privacy-policy', 'Home::privacy_policy');
 $routes->get('/refund-policy', 'Home::refund_policy');
 $routes->get('/contact-us', 'Home::contact_us');
 $routes->get('/responsible-gaming', 'Home::responsible_gaming');
 $routes->get('/platform-commission', 'Home::platform_commission');
-$routes->get('/tds-policys', 'Home::tds_policy');
+$routes->get('/tds-policy', 'Home::tds_policy');
+$routes->get('/game-rules', 'Home::game_rules');
 
 
 /*
